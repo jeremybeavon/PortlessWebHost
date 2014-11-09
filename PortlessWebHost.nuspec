@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>PortlessWebHost</id>
+        <version>1.0.0</version>
+        <authors>Jeremy Beavon</authors>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Host an ASP.Net website without any ports but requests can be made to it.</description>
+        <dependencies>
+            <dependency id="FluentSharp.CoreLib" version="5.5.172" />
+            <dependency id="FiddlerCore" version="4.4.8.4" />
+        </dependencies>
+        <frameworkAssemblies>
+            <frameworkAssembly assemblyName="System.Web" targetFramework="" />
+            <frameworkAssembly assemblyName="System.Configuration" targetFramework="" />
+            <frameworkAssembly assemblyName="System.Core" targetFramework="" />
+        </frameworkAssemblies>
+    </metadata>
+    <files>
+        <file src="PortlessWebHost\bin\Release\PortlessWebHost.dll" target="lib\PortlessWebHost.dll" />
+    </files>
+</package>

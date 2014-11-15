@@ -99,10 +99,10 @@ namespace PortlessWebHost
 
         public override WebResponse GetResponse()
         {
-            return GetFiddlerResponse();
+            return GetPortlessResponse();
         }
 
-        public PortlessWebResponse GetFiddlerResponse()
+        public PortlessWebResponse GetPortlessResponse()
         {
             HTTPRequestHeaders headers = new HTTPRequestHeaders()
             {

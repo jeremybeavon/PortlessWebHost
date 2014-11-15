@@ -7,6 +7,8 @@ namespace PortlessWebHost.Internal
 {
     internal interface IWebHost
     {
+        AppDomain Domain { get; }
+
         byte[] ProcessRequest(byte[] requestBytes);
     }
 }

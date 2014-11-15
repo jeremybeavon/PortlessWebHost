@@ -11,14 +11,14 @@ using PortlessWebHost.Internal;
 namespace PortlessWebHost
 {
     [Serializable]
-    public sealed class FiddlerWebRequest : WebRequest
+    public sealed class PortlessWebRequest : WebRequest
     {
         private readonly Uri requestUri;
         private readonly Func<byte[], byte[]> processRequestFunc;
         private MemoryStream requestStream;
         private long contentLength;
 
-        internal FiddlerWebRequest(Uri requestUri, Func<byte[], byte[]> processRequestFunc)
+        internal PortlessWebRequest(Uri requestUri, Func<byte[], byte[]> processRequestFunc)
         {
             this.requestUri = requestUri;
             this.processRequestFunc = processRequestFunc;
@@ -26,7 +26,7 @@ namespace PortlessWebHost
             Headers = new WebHeaderCollection();
         }
 
-        public FiddlerWebRequest(SerializationInfo serializationInfo, StreamingContext streamingContext)
+        public PortlessWebRequest(SerializationInfo serializationInfo, StreamingContext streamingContext)
             : base(serializationInfo, streamingContext)
         {
         }
@@ -99,6 +99,11 @@ namespace PortlessWebHost
 
         public override WebResponse GetResponse()
         {
+            return GetFiddlerResponse();
+        }
+
+        public PortlessWebResponse GetFiddlerResponse()
+        {
             HTTPRequestHeaders headers = new HTTPRequestHeaders()
             {
                 HTTPMethod = Method,
@@ -113,7 +118,7 @@ namespace PortlessWebHost
             using (MemoryStream fullRequestStream = new MemoryStream())
             {
                 session.WriteRequestToStream(false, false, fullRequestStream);
-                return new FiddlerWebResponse(requestUri, session, processRequestFunc(fullRequestStream.ToArray()));
+                return new PortlessWebResponse(requestUri, session, processRequestFunc(fullRequestStream.ToArray()));
             }
         }
     }

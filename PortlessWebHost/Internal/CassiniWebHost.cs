@@ -1,5 +1,8 @@
 ﻿using System;
+using System.IO;
+using System.Web;
 using System.Web.Hosting;
+using AppDomainCallbackExtensions;
 using CassiniDev;
 
 namespace PortlessWebHost.Internal
@@ -15,11 +18,18 @@ namespace PortlessWebHost.Internal
             WebHost.Current = new WebHost(this);
         }
 
+        public AppDomain Domain
+        {
+            get { return AppDomain.CurrentDomain; }
+        }
+
         public void Configure(string virtualPath, string physicalPath)
         {
             server = new Server(DummyPort, virtualPath, physicalPath);
             host = new Host();
             host.Configure(server, DummyPort, virtualPath, physicalPath);
+            AppDomain.CurrentDomain.AddResolveDirectory(Path.GetDirectoryName(typeof(PortlessModule).Assembly.Location));
+            HttpApplication.RegisterModule(typeof(PortlessModule));
         }
 
         public byte[] ProcessRequest(byte[] requestBytes)

@@ -17,7 +17,7 @@ namespace PortlessWebHost.Tests
             string physicalPath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativePath));
             using (WebHost host = new WebHost("/", physicalPath))
             {
-                FiddlerWebRequest request = host.CreateRequest(new Uri("http://localhost/Default.aspx"));
+                PortlessWebRequest request = host.CreateRequest(new Uri("http://localhost/Default.aspx"));
                 request.Method = "GET";
                 using (WebResponse response = request.GetResponse())
                 {
@@ -25,6 +25,26 @@ namespace PortlessWebHost.Tests
                     {
                         string responseText = Encoding.GetEncoding(1252).GetString(responseStream.ToArray());
                         responseText.Should().Contain("<h2>Web Host Test Page</h2>");
+                    }
+                }
+            }
+        }
+
+        [TestMethod]
+        public void TestWebSite2()
+        {
+            string relativePath = @"..\..\..\PortlessWebHost.TestWebSite2";
+            string physicalPath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativePath));
+            using (WebHost host = new WebHost("/", physicalPath))
+            {
+                PortlessWebRequest request = host.CreateRequest(new Uri("http://localhost/Account/Login"));
+                request.Method = "GET";
+                using (WebResponse response = request.GetResponse())
+                {
+                    using (MemoryStream responseStream = (MemoryStream)response.GetResponseStream())
+                    {
+                        string responseText = Encoding.GetEncoding(1252).GetString(responseStream.ToArray());
+                        responseText.Should().Contain("Web Host Test Page 2");
                     }
                 }
             }

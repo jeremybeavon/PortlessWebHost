@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 2013 for Web
-VisualStudioVersion = 12.0.30723.0
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortlessWebHost", "PortlessWebHost\PortlessWebHost.csproj", "{29E947E5-2C54-456D-B788-9F9B162AEC32}"
 EndProject
@@ -20,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortlessWebHost.Tests", "Po
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortlessWebHost.CassiniDev", "PortlessWebHost.CassiniDev\PortlessWebHost.CassiniDev.csproj", "{90D5C1C1-4AAA-49FE-82BF-2E12EA0011EF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortlessWebHost.TestWebSite2", "PortlessWebHost.TestWebSite2\PortlessWebHost.TestWebSite2.csproj", "{323C3F0A-B00C-43A0-ABA4-60331A6C4EE5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +45,10 @@ Global
 		{90D5C1C1-4AAA-49FE-82BF-2E12EA0011EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90D5C1C1-4AAA-49FE-82BF-2E12EA0011EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90D5C1C1-4AAA-49FE-82BF-2E12EA0011EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{323C3F0A-B00C-43A0-ABA4-60331A6C4EE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{323C3F0A-B00C-43A0-ABA4-60331A6C4EE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{323C3F0A-B00C-43A0-ABA4-60331A6C4EE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{323C3F0A-B00C-43A0-ABA4-60331A6C4EE5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

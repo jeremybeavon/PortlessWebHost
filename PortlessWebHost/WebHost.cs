@@ -22,14 +22,19 @@ namespace PortlessWebHost
 
         public static WebHost Current { get; internal set; }
 
-        public FiddlerWebClient CreateClient()
+        public AppDomain Domain
         {
-            return new FiddlerWebClient(host.ProcessRequest);
+            get { return host.Domain; }
         }
 
-        public FiddlerWebRequest CreateRequest(Uri requestUrl)
+        public PortlessWebClient CreateClient()
         {
-            return new FiddlerWebRequest(requestUrl, host.ProcessRequest);
+            return new PortlessWebClient(host.ProcessRequest);
+        }
+
+        public PortlessWebRequest CreateRequest(Uri requestUrl)
+        {
+            return new PortlessWebRequest(requestUrl, host.ProcessRequest);
         }
 
         public void Dispose()

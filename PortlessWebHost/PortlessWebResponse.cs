@@ -8,13 +8,13 @@ using Fiddler;
 namespace PortlessWebHost
 {
     [Serializable]
-    public sealed class FiddlerWebResponse : WebResponse
+    public sealed class PortlessWebResponse : WebResponse
     {
         private readonly WebHeaderCollection headers;
         private readonly Uri responseUri;
         private readonly MemoryStream responseStream;
 
-        internal FiddlerWebResponse(Uri responseUri, Session session, byte[] responseBytes)
+        internal PortlessWebResponse(Uri responseUri, Session session, byte[] responseBytes)
         {
             this.responseUri = responseUri;
             using (MemoryStream fullResponseStream = new MemoryStream(responseBytes))
@@ -24,6 +24,8 @@ namespace PortlessWebHost
                     throw new InvalidOperationException("response stream could not be parsed.");
                 }
 
+                StatusCode = session.responseCode;
+                StatusDescription = session.oResponse.headers.HTTPResponseStatus;
                 headers = new WebHeaderCollection();
                 foreach (HTTPHeaderItem header in session.oResponse.headers)
                 {
@@ -34,10 +36,14 @@ namespace PortlessWebHost
             }
         }
 
-        public FiddlerWebResponse(SerializationInfo serializationInfo, StreamingContext streamingContext)
+        public PortlessWebResponse(SerializationInfo serializationInfo, StreamingContext streamingContext)
             : base(serializationInfo, streamingContext)
         {
         }
+
+        public int StatusCode { get; private set; }
+
+        public string StatusDescription { get; private set; }
 
         public override long ContentLength
         {

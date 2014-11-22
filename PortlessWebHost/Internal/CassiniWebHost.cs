@@ -10,6 +10,10 @@ namespace PortlessWebHost.Internal
     internal sealed class CassiniWebHost : MarshalByRefObject, IRegisteredObject, IWebHost
     {
         private const int DummyPort = 12345;
+
+        [ThreadStatic]
+        private static bool waitForShutdown;
+
         private Host host;
         private Server server;
         private bool isSecure;
@@ -22,6 +26,11 @@ namespace PortlessWebHost.Internal
         public AppDomain Domain
         {
             get { return AppDomain.CurrentDomain; }
+        }
+
+        public static void WaitForShutdown()
+        {
+            waitForShutdown = true;
         }
 
         public void Configure(string virtualPath, string physicalPath, bool isSecure)
@@ -39,6 +48,12 @@ namespace PortlessWebHost.Internal
             using (var socket = new Socket(requestBytes))
             {
                 new PortlessRequest(server, host, socket, isSecure).Process();
+                if (waitForShutdown)
+                {
+                    socket.ShutdownLock.WaitOne();
+                    waitForShutdown = false;
+                }
+
                 return socket.ToArray();
             }
         }

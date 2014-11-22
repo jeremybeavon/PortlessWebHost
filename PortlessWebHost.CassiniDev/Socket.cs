@@ -4,14 +4,17 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 
 namespace CassiniDev
 {
     public class Socket : IDisposable
     {
+        private static readonly Func<EventWaitHandle> defaultShutdownLockFactory = () => new ManualResetEvent(false);
+        private static Func<EventWaitHandle> shutdownLockFactory;
         private readonly Stream inputStream;
         private readonly MemoryStream outputStream;
+        private readonly EventWaitHandle shutdownLock;
 
         public Socket(AddressFamily addressFamily, SocketType socketType, ProtocolType protocolType)
         {
@@ -21,6 +24,13 @@ namespace CassiniDev
         {
             inputStream = new MemoryStream(requestBytes);
             outputStream = new MemoryStream();
+            shutdownLock = ShutdownLockFactory();
+        }
+
+        public static Func<EventWaitHandle> ShutdownLockFactory
+        {
+            get { return shutdownLockFactory ?? defaultShutdownLockFactory; }
+            set { shutdownLockFactory = value; }
         }
 
         public int Available
@@ -41,6 +51,11 @@ namespace CassiniDev
         public EndPoint RemoteEndPoint
         {
             get { return null; }
+        }
+
+        public EventWaitHandle ShutdownLock
+        {
+            get { return shutdownLock; }
         }
 
         public bool Poll(int microSeconds, SelectMode mode)
@@ -65,6 +80,7 @@ namespace CassiniDev
         {
             inputStream.Dispose();
             outputStream.Dispose();
+            shutdownLock.Dispose();
         }
 
         public void Listen(int backlog)
@@ -90,6 +106,7 @@ namespace CassiniDev
 
         public void Shutdown(SocketShutdown how)
         {
+            shutdownLock.Set();
         }
 
         public void SetSocketOption(SocketOptionLevel optionLevel, SocketOptionName optionName, bool optionValue)

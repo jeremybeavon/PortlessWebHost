@@ -81,6 +81,7 @@
     <Compile Include="Internal\PortlessHttpResponse.cs" />
     <Compile Include="Internal\PortlessModule.cs" />
     <Compile Include="Internal\PortlessRequest.cs" />
+    <Compile Include="Internal\SocketShutdownLockFactory.cs" />
     <Compile Include="PortlessWebClient.cs">
       <SubType>Component</SubType>
     </Compile>

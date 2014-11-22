@@ -101,5 +101,25 @@ namespace PortlessWebHost.Tests
                 }
             }
         }
+
+        [TestMethod]
+        public void TestWebSiteAsyncRequest()
+        {
+            string relativePath = @"..\..\..\PortlessWebHost.TestWebSite";
+            string physicalPath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativePath));
+            using (TestAsyncWebHost host = new TestAsyncWebHost("/", physicalPath))
+            {
+                PortlessWebRequest request = host.CreateRequest(new Uri("http://localhost/AsyncRequest.ashx"));
+                request.Method = "GET";
+                using (WebResponse response = request.GetResponse())
+                {
+                    using (MemoryStream responseStream = (MemoryStream)response.GetResponseStream())
+                    {
+                        string responseText = Encoding.UTF8.GetString(responseStream.ToArray());
+                        responseText.Should().Contain("Async test succeeded");
+                    }
+                }
+            }
+        }
     }
 }

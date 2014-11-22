@@ -22,6 +22,7 @@ namespace PortlessWebHost.Internal
         {
             HttpContext context = HttpContext.Current;
             context.Request.RequestContext.HttpContext = new PortlessHttpContext(context);
+            CassiniWebHost.WaitForShutdown();
         }
     }
 }

@@ -51,6 +51,7 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
@@ -67,10 +68,16 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="TestAsyncWebHost.cs" />
+    <Compile Include="TestEventWaitHandle.cs" />
     <Compile Include="WebSiteTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\PortlessWebHost.TestWebSite\PortlessWebHost.TestWebSite.csproj">
+      <Project>{3d15cfef-620d-4721-9402-8887987431d3}</Project>
+      <Name>PortlessWebHost.TestWebSite</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PortlessWebHost\PortlessWebHost.csproj">
       <Project>{29e947e5-2c54-456d-b788-9f9b162aec32}</Project>
       <Name>PortlessWebHost</Name>

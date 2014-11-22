@@ -11,7 +11,12 @@ namespace PortlessWebHost
         private readonly IWebHost host;
 
         public WebHost(string virtualPath, string physicalPath)
-            : this(new InternalWebHost(virtualPath, physicalPath))
+            : this(virtualPath, physicalPath, Protocol.Http)
+        {
+        }
+
+        public WebHost(string virtualPath, string physicalPath, Protocol protocol)
+            : this(new InternalWebHost(virtualPath, physicalPath, protocol))
         {
         }
 

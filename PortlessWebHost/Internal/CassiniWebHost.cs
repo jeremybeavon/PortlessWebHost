@@ -12,6 +12,7 @@ namespace PortlessWebHost.Internal
         private const int DummyPort = 12345;
         private Host host;
         private Server server;
+        private bool isSecure;
 
         public CassiniWebHost()
         {
@@ -23,20 +24,21 @@ namespace PortlessWebHost.Internal
             get { return AppDomain.CurrentDomain; }
         }
 
-        public void Configure(string virtualPath, string physicalPath)
+        public void Configure(string virtualPath, string physicalPath, bool isSecure)
         {
             server = new Server(DummyPort, virtualPath, physicalPath);
             host = new Host();
             host.Configure(server, DummyPort, virtualPath, physicalPath);
             AppDomain.CurrentDomain.AddResolveDirectory(Path.GetDirectoryName(typeof(PortlessModule).Assembly.Location));
             HttpApplication.RegisterModule(typeof(PortlessModule));
+            this.isSecure = isSecure;
         }
 
         public byte[] ProcessRequest(byte[] requestBytes)
         {
             using (var socket = new Socket(requestBytes))
             {
-                new Request(server, host, new Connection(server, socket)).Process();
+                new PortlessRequest(server, host, socket, isSecure).Process();
                 return socket.ToArray();
             }
         }

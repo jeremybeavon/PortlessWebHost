@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>PortlessWebHost</id>
-        <version>1.0.5</version>
+        <version>1.0.6</version>
         <authors>Jeremy Beavon</authors>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>Host an ASP.Net website without any ports but requests can be made to it.</description>

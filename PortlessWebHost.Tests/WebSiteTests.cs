@@ -51,6 +51,27 @@ namespace PortlessWebHost.Tests
         }
 
         [TestMethod]
+        public void TestWebSite2WithHttps()
+        {
+            const string url = "https://localhost/Account/ConfirmEmail?userId=11&code=success";
+            const string relativePath = @"..\..\..\PortlessWebHost.TestWebSite2";
+            string physicalPath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativePath));
+            using (WebHost host = new WebHost("/", physicalPath, Protocol.Https))
+            {
+                PortlessWebRequest request = host.CreateRequest(new Uri(url));
+                request.Method = "GET";
+                using (WebResponse response = request.GetResponse())
+                {
+                    using (MemoryStream responseStream = (MemoryStream)response.GetResponseStream())
+                    {
+                        string responseText = Encoding.GetEncoding(1252).GetString(responseStream.ToArray());
+                        responseText.Should().Contain("Thank you for confirming your email.");
+                    }
+                }
+            }
+        }
+
+        [TestMethod]
         public void TestWebSite2Post()
         {
             const string json = "{Hometown:\"Katmandu\"}";

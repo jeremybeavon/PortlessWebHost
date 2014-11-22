@@ -10,7 +10,7 @@ namespace PortlessWebHost.Internal
         private readonly string appId;
         private readonly ApplicationManager applicationManager;
 
-        public InternalWebHost(string virtualPath, string physicalPath)
+        public InternalWebHost(string virtualPath, string physicalPath, Protocol protocol)
         {
             appId = (virtualPath + physicalPath).GetHashCode().ToString("x");
             applicationManager = ApplicationManager.GetApplicationManager();
@@ -28,8 +28,7 @@ namespace PortlessWebHost.Internal
             Host = Domain.CreateInstanceFromAndUnwrap<CassiniWebHost>();
             HostingEnvironment.RegisterObject(Host);
             HostingEnvironment.UnregisterObject(defaultHost);
-            Host.Configure(virtualPath, physicalPath);
-
+            Host.Configure(virtualPath, physicalPath, protocol == Protocol.Https);
         }
 
         public CassiniWebHost Host { get; private set; }

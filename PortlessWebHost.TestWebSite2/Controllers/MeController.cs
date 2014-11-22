@@ -14,7 +14,6 @@ using PortlessWebHost.TestWebSite2.Models;
 
 namespace PortlessWebHost.TestWebSite2.Controllers
 {
-    [Authorize]
     public class MeController : ApiController
     {
         private ApplicationUserManager _userManager;
@@ -45,6 +44,11 @@ namespace PortlessWebHost.TestWebSite2.Controllers
         {
             var user = UserManager.FindById(User.Identity.GetUserId());
             return new GetViewModel() { Hometown = user.Hometown };
+        }
+
+        public GetViewModel Post(GetViewModel hometown)
+        {
+            return new GetViewModel() { Hometown = "Hometown = " + hometown.Hometown };
         }
     }
 }

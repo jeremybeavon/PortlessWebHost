@@ -49,5 +49,36 @@ namespace PortlessWebHost.Tests
                 }
             }
         }
+
+        [TestMethod]
+        public void TestWebSite2Post()
+        {
+            const string json = "{Hometown:\"Katmandu\"}";
+            string relativePath = @"..\..\..\PortlessWebHost.TestWebSite2";
+            string physicalPath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativePath));
+            using (WebHost host = new WebHost("/", physicalPath))
+            {
+                PortlessWebRequest request = host.CreateRequest(new Uri("http://localhost/api/Me"));
+                request.Method = "POST";
+                request.ContentType = "application/json";
+                request.ContentLength = json.Length;
+                using (Stream requestStream = request.GetRequestStream())
+                {
+                    using (TextWriter requestWriter = new StreamWriter(requestStream))
+                    {
+                        requestWriter.Write(json);
+                    }
+                }
+
+                using (WebResponse response = request.GetResponse())
+                {
+                    using (MemoryStream responseStream = (MemoryStream)response.GetResponseStream())
+                    {
+                        string responseText = Encoding.UTF8.GetString(responseStream.ToArray());
+                        responseText.Should().Contain("Hometown = Katmandu");
+                    }
+                }
+            }
+        }
     }
 }

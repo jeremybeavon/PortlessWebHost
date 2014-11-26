@@ -78,6 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Internal\PortlessHttpContext.cs" />
+    <Compile Include="Internal\PortlessHttpHeaders.cs" />
     <Compile Include="Internal\PortlessHttpResponse.cs" />
     <Compile Include="Internal\PortlessModule.cs" />
     <Compile Include="Internal\PortlessRequest.cs" />

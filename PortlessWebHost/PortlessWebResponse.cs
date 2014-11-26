@@ -29,7 +29,7 @@ namespace PortlessWebHost
                 headers = new WebHeaderCollection();
                 foreach (HTTPHeaderItem header in session.oResponse.headers)
                 {
-                    headers[header.Name] = header.Value;
+                    headers.Add(header.Name, header.Value);
                 }
 
                 responseStream = new MemoryStream(session.ResponseBody);

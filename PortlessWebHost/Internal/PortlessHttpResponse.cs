@@ -15,7 +15,7 @@ namespace PortlessWebHost.Internal
         public PortlessHttpResponse(HttpResponse response)
             : base(response)
         {
-            headers = new NameValueCollection();
+            headers = new PortlessHttpHeaders(response);
         }
 
         public override NameValueCollection Headers

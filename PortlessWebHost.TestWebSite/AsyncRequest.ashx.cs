@@ -42,6 +42,8 @@ namespace PortlessWebHost.TestWebSite
 
         public void FinishRequest()
         {
+            context.Request.RequestContext.HttpContext.Response.Headers.Add("Set-Cookie", "Cookie1=test1");
+            context.Request.RequestContext.HttpContext.Response.Headers.Add("Set-Cookie", "Cookie2=test2");
             context.Response.Write("Async test succeeded");
             IsCompleted = true;
             callback(this);

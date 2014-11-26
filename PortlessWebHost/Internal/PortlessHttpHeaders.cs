@@ -20,5 +20,11 @@ namespace PortlessWebHost.Internal
             base.Add(name, value);
             response.AppendHeader(name, value);
         }
+
+        public override void Set(string name, string value)
+        {
+            base.Set(name, value);
+            response.AppendHeader(name, value);
+        }
     }
 }
